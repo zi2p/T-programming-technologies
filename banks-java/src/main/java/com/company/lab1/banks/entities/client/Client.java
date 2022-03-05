@@ -12,53 +12,48 @@ public class Client {
     private String fakeAdres = " ";
     private int fakePassport = 0;
 
-    public Client(String name, int id, String address, int passport) {
-        Name = name;
-        Address = address;
-        Passport = passport;
-        ID = id;
-        BankAccount = null;
-    }
-    public Client(String name, int id) {
-        Name = name;
-        ID = id;
-        BankAccount = null;
-    }
-    public Client(String name, int id, int passport) {
-        Name = name;
-        Passport = passport;
-        ID = id;
-        BankAccount = null;
-    }
-    public Client(String name, int id, String address) {
-        Name = name;
-        Address = address;
-        ID = id;
-        BankAccount = null;
-    }
-
-    private String Name;
-    private String getName() { return Name; }
-
-    public String Address;
-    public int Passport;
+    public String address;
+    public int passport;
     public int Phone;
-    public int ID;
-    public BankAccount BankAccount;
+    public int id;
+    public BankAccount bankAccount;
+    private String name;
 
-    public void setPassport(int passport) { Passport=passport; }
+    public Client(String name, int id, String address, int passport) {
+        this.name = name;
+        this.address = address;
+        this.passport = passport;
+        this.id = id;
+        bankAccount = null;
+    }
+
+    public Client(String name, int id) {
+        this(name, id, null, 0);
+    }
+
+    public Client(String name, int id, int passport) {
+        this(name, id, null, passport);
+    }
+
+    public Client(String name, int id, String address) {
+        this(name, id, address, 0);
+    }
+
+    private String getName() { return name; }
+
+    public void setPassport(int passport) { this.passport =passport; }
     public void setPhone(int phone) { Phone=phone; }
-    public void setAddress(String address) { Address=address; }
-    public void setBankAccount(BankAccount bankAccount) { BankAccount=bankAccount; }
+    public void setAddress(String address) { this.address =address; }
+    public void setBankAccount(BankAccount bankAccount) { this.bankAccount =bankAccount; }
 
-    public String getAddress() { return Address; }
-    public int getNumberPassport() { return Passport; }
-    public BankAccount getBankAccount() { return BankAccount; }
+    public String getAddress() { return address; }
+    public int getNumberPassport() { return passport; }
+    public BankAccount getBankAccount() { return bankAccount; }
     public int getPhone() { return Phone; }
-    public int getID() { return ID; }
-    public boolean getAdress() { return !Objects.equals(Address, fakeAdres); }
-    public boolean getPassport() { return Passport != fakePassport; }
-    public BankAccount getAccount() { return BankAccount; }
+    public int getId() { return id; }
+    public boolean getAdress() { return !Objects.equals(address, fakeAdres); }
+    public boolean getPassport() { return passport != fakePassport; }
+    public BankAccount getAccount() { return bankAccount; }
 
-    public void setMoney(double sum, LocalDateTime dateTime) { BankAccount.topUpYourAccount(sum, dateTime); }
+    public void setMoney(double sum, LocalDateTime dateTime) { bankAccount.topUpYourAccount(sum, dateTime); }
 }

@@ -13,16 +13,16 @@ import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class FactoryConsole implements Factory {
-    private BankAccount Account;
+    private BankAccount account;
     private double fakeComissions = 0;
     private double fakeProcent = 0;
-    private Bank Bank;
-    public void setAccount(BankAccount account) { Account = account; }
+    private Bank bank;
 
     public FactoryConsole(Bank bank) {
-        Bank = bank;
+        this.bank = bank;
     }
 
+    public void setAccount(BankAccount account) { this.account = account; }
     public BankAccount createdBankAccount(int account) {
         var scanner = new Scanner(in);
         double sum;
@@ -36,7 +36,7 @@ public class FactoryConsole implements Factory {
                     case 1 -> bankAccount = new Debit(sum, fakeProcent);
                     case 2 -> {
                         LocalDateTime dataTime = LocalDateTime.now();
-                        bankAccount = new Deposit(sum, dataTime, Bank.getPercentageChange());
+                        bankAccount = new Deposit(sum, dataTime, bank.getPercentageChange());
                     }
                 }
             }

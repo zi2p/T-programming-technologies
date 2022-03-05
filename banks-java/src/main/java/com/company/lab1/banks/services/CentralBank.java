@@ -13,26 +13,25 @@ public class CentralBank {
          Он должен предоставлять все нужные другим банкам методы, методы добавления нового банка.
          Он также занимается уведомлением других банков о том, что нужно начислять остаток или комиссию -
          для этого механизма НЕ требуется создавать таймеры и завязываться на реальное время. */
-    public CentralBank()
-    {
-        Banks = new ArrayList<Bank>();
+    private int id;
+    private ArrayList<Bank> banks;
+
+    public CentralBank() {
+        banks = new ArrayList<Bank>();
         id = 0;
     }
 
-    private int id;
-    private ArrayList<Bank> Banks;
-    private ArrayList<Bank> getBank() { return Banks; }
-
+    private ArrayList<Bank> getBank() { return banks; }
     public void addBank(MethodPercentageChange percentageChange, TransferLimit transferLimit) {
         var bank = new Bank(id);
         id++;
         provideTheMethodToTheBank(bank, percentageChange, transferLimit);
-        Banks.add(bank);
+        banks.add(bank);
         bank.setMyCentralBank(this);
     }
 
-    public void addBank(Bank bank){ Banks.add(bank); }
-    public ArrayList<Bank> getListBanks() { return Banks; }
+    public void addBank(Bank bank){ banks.add(bank); }
+    public ArrayList<Bank> getListBanks() { return banks; }
     public void provideTheMethodToTheBank(Banks bank, MethodPercentageChange percentageChange, TransferLimit transferLimit) {
         bank.setMethodPercentageChange(percentageChange);
         bank.setMethodTransferLimit(transferLimit);

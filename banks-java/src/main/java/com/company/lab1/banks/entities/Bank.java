@@ -11,59 +11,59 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Bank implements Banks {
-    public Bank(int id)
-    {
-        ID = id;
-        Clients = new ArrayList<Pair<Client, BankAccount>>();
-        ClientID = 0;
-        TransferLimit = new TransferLimit(Double.MAX_VALUE);
+
+    private CentralBank myCentralBank;
+    private int id;
+    private int clientID;
+    private TransferLimit transferLimit;
+    private TransferLimit doubtfulLimit;
+    private MethodPercentageChange percentageChange;
+    private ArrayList<Pair<Client, BankAccount>> clients;
+
+    public Bank(int id) {
+        this.id = id;
+        clients = new ArrayList<Pair<Client, BankAccount>>();
+        clientID = 0;
+        transferLimit = new TransferLimit(Double.MAX_VALUE);
     }
-    private CentralBank MyCentralBank;
-    private int ID;
-    private int ClientID;
-    private TransferLimit TransferLimit;
-    private TransferLimit DoubtfulLimit;
-    private MethodPercentageChange PercentageChange;
-    private ArrayList<Pair<Client, BankAccount>> Clients;
 
-
-    private void setTransferLimit(TransferLimit transferLimit) { TransferLimit = transferLimit; }
-    private void setPercentageChange(MethodPercentageChange method) { PercentageChange = method; }
-    private void setClientID(int id) { ClientID = id;}
+    private void setTransferLimit(TransferLimit transferLimit) { this.transferLimit = transferLimit; }
+    private void setPercentageChange(MethodPercentageChange method) { percentageChange = method; }
+    private void setClientID(int id) { clientID = id;}
     private Client setClient(String name, String address, int passport) {
-        return new Client(name, ClientID, address, passport);
+        return new Client(name, clientID, address, passport);
     }
 
-    private int getClientID() { return ClientID; }
-    private ArrayList<Pair<Client, BankAccount>> getClients() { return Clients; }
-    public MethodPercentageChange getPercentageChange(){ return PercentageChange; }
+    private int getClientID() { return clientID; }
+    private ArrayList<Pair<Client, BankAccount>> getClients() { return clients; }
+    public MethodPercentageChange getPercentageChange(){ return percentageChange; }
 
-    public void setMethodPercentageChange(MethodPercentageChange percentageChange) { PercentageChange = percentageChange; }
-    public void setMethodTransferLimit(TransferLimit transferLimit) { TransferLimit = transferLimit; }
-    public void setDoubtfulLimit(TransferLimit transferLimit) { DoubtfulLimit = transferLimit; }
-    public void setMyCentralBank(CentralBank cb) { MyCentralBank = cb; }
+    public void setMethodPercentageChange(MethodPercentageChange percentageChange) { this.percentageChange = percentageChange; }
+    public void setMethodTransferLimit(TransferLimit transferLimit) { this.transferLimit = transferLimit; }
+    public void setDoubtfulLimit(TransferLimit transferLimit) { doubtfulLimit = transferLimit; }
+    public void setMyCentralBank(CentralBank cb) { myCentralBank = cb; }
 
-    public int getID() { return ID; }
-    public TransferLimit getDoubtfulLimit() { return DoubtfulLimit; }
-    public TransferLimit getTransferLimit() { return TransferLimit; }
-    public CentralBank getMyCentralBank() { return MyCentralBank; }
+    public int getId() { return id; }
+    public TransferLimit getDoubtfulLimit() { return doubtfulLimit; }
+    public TransferLimit getTransferLimit() { return transferLimit; }
+    public CentralBank getMyCentralBank() { return myCentralBank; }
 
     public Client addClient(String name, BankAccount account, String address, int passport) {
         Pair<Client, BankAccount> client = new Pair<Client, BankAccount>(setClient(name, address, passport), account);
-        Clients.add(client);
-        ClientID++;
+        clients.add(client);
+        clientID++;
         return client.getValue0();
     }
     public void addClient(Client person) {
-        var t = new Pair<Client, BankAccount>(person, person.getAccount());
-        Clients.add(t);
+        var client = new Pair<Client, BankAccount>(person, person.getAccount());
+        clients.add(client);
     }
 
     public double getMoney(Client person, double sum, LocalDateTime dateTime) {
-        for (Pair<Client, BankAccount> client : Clients) {
-            if (client.getValue0().getID() == person.getID()) {
-                if (client.getValue0().getAdress() && client.getValue0().getPassport()) return client.getValue1().cashWithdrawal(sum, dateTime);
-                return client.getValue1().cashWithdrawal(Math.min(sum, DoubtfulLimit.getMaxSum()), dateTime);
+        for (Pair<Client, BankAccount> client : clients) {
+            if (client.getValue0().getId() == person.getId()) {
+                if (client.getValue0().getAdress() && client.getValue0().getPassport()) {return client.getValue1().cashWithdrawal(sum, dateTime);}
+                return client.getValue1().cashWithdrawal(Math.min(sum, doubtfulLimit.getMaxSum()), dateTime);
             }
         }
         return 0;

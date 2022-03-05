@@ -10,15 +10,15 @@ public class ClientBuilder implements ClientBuilders {
     private String fakeAdres = " ";
     private int fakePassport = 0;
 
-    private Client Client;
+    private Client client;
 
     public Client Build() {
-        if (Client != null) return Client;
+        if (client != null) return client;
         throw new Exceptions("the client does not exist");
     }
 
-    public void setName(String name, int id) { Client = new Client(name, id, fakeAdres, fakePassport); }
-    public void setPassport(int passport) { if (passport <= MAXPASSPORT && passport >= MINPASSPORT) Client.Passport = passport; }
-    public void setAddress(String address) { Client.Address = address; }
-    public void setAccount(BankAccount account) { Client.BankAccount = account; }
+    public void setName(String name, int id) { client = new Client(name, id, fakeAdres, fakePassport); }
+    public void setPassport(int passport) { if (passport <= MAXPASSPORT && passport >= MINPASSPORT) client.passport = passport; }
+    public void setAddress(String address) { client.address = address; }
+    public void setAccount(BankAccount account) { client.bankAccount = account; }
 }

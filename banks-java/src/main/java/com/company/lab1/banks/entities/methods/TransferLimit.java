@@ -1,14 +1,16 @@
 package com.company.lab1.banks.entities.methods;
 
 public class TransferLimit implements MethodTransferLimit {
+    private double sum;
+
     public TransferLimit(double sum){
-        Sum = sum;
+        this.sum = sum;
     }
-    private double Sum;
+
     private double getSum() {
-        return Sum;
+        return sum;
     }
     public double getMaxSum(){
-        return Sum;
+        return sum;
     }
 }

@@ -8,16 +8,16 @@ public class AddendumClientBuilder implements ClientBuilders{
     private final int MINPASSPORT = 1000000000;
     private String fakeAdres = " ";
     private int fakePassport = 0;
+    private Client client;
 
-    public AddendumClientBuilder(Client client) { Client = client; }
-    private Client Client;
+    public AddendumClientBuilder(Client client) { this.client = client; }
 
-    public Client Build() { return Client; }
+    public Client Build() { return client; }
     public void setName(String name, int id) { }
-    public void setAddress(String address) { Client.Address = address; }
-    public void setAccount(BankAccount account) { Client.BankAccount = account; }
-    public void setPhone(int phone) { Client.Phone = phone; }
+    public void setAddress(String address) { client.address = address; }
+    public void setAccount(BankAccount account) { client.bankAccount = account; }
+    public void setPhone(int phone) { client.Phone = phone; }
     public void setPassport(int passport) {
-        if (passport <= MAXPASSPORT && passport >= MINPASSPORT) Client.Passport = passport;
+        if (passport <= MAXPASSPORT && passport >= MINPASSPORT) client.passport = passport;
     }
 }

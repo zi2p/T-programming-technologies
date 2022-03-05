@@ -12,88 +12,85 @@ public class Debit implements BankAccount {
     /* обычный счет с фиксированным процентом на остаток.
         Деньги можно снимать в любой момент, в минус уходить нельзя.
         Комиссий нет */
+    private Bank myBank;
+    private QueueOfResponsibilities queue = new QueueOfResponsibilities();
+    private double amount;
+    private double sum;
+    private double percentages;
+    private Triplet<String, Double, LocalDateTime> lastTransaction;
+
     public Debit(double sum, double proc) {
         var time = LocalDateTime.now();
-        Amount = sum;
-        Percentages = proc;
-        Sum = Amount * Percentages;
-        LastTransaction = new Triplet<String, Double, LocalDateTime>(" ", 0., time);
+        amount = sum;
+        percentages = proc;
+        this.sum = amount * percentages;
+        lastTransaction = new Triplet<String, Double, LocalDateTime>(" ", 0., time);
     }
     public Debit(double sum) {
-        var time = LocalDateTime.now();
-        Amount = sum;
-        Sum = Amount * Percentages;
-        LastTransaction = new Triplet<String, Double, LocalDateTime>(" ", 0., time);
+        this(sum, 0);
     }
 
-    private Bank MyBank;
-    private QueueOfResponsibilities Queue = new QueueOfResponsibilities();
-    private double Amount;
-    private double Sum;
-    private double Percentages;
-    private Triplet<String, Double, LocalDateTime> LastTransaction;
+    private void setSum(double sum) { this.sum = sum; }
+    private void setLastTransaction(Triplet<String, Double, LocalDateTime> lastTransaction) { this.lastTransaction = lastTransaction; }
+    private void setAmount(double amount) { this.amount = amount; }
 
-    private void setSum(double sum) { Sum = sum; }
-    private void setLastTransaction(Triplet<String, Double, LocalDateTime> lastTransaction) { LastTransaction = lastTransaction; }
-    private void setAmount(double amount) { Amount = amount; }
+    private double getSum() { return sum; }
+    private Triplet<String, Double, LocalDateTime> getLastTransaction() { return lastTransaction; }
+    private double getAmount() { return amount; }
 
-    private double getSum() { return Sum; }
-    private Triplet<String, Double, LocalDateTime> getLastTransaction() { return LastTransaction; }
-    private double getAmount() { return Amount; }
+    public void setPercentage(double proc) { percentages = proc; }
+    public void setMyBank(Bank bank) { myBank = bank; }
 
-    public void setPercentage(double proc) { Percentages = proc; }
-    public void setMyBank(Bank bank) { MyBank = bank; }
-
-    public double getTheAmountOnTheAccount() { return Amount; }
-    public double getPercentages() { return Percentages; }
+    public double getTheAmountOnTheAccount() { return amount; }
+    public double getPercentages() { return percentages; }
     public double getCommission() { return 0; }
 
     public void appointСommission(double commission) { }
     public void appointPercentages(double proc) {
         var dataTime = LocalDateTime.now();
-        if (isDayPassed(dataTime)) {Sum += Amount * Percentages;}
+        if (isDayPassed(dataTime)) {sum += amount * percentages;}
     }
     private boolean isDayPassed(LocalDateTime dateTime) {
-        return MyBank.getMyCentralBank().dayPassed(LastTransaction.getValue2(), dateTime);
+        return myBank.getMyCentralBank().dayPassed(lastTransaction.getValue2(), dateTime);
     }
     private boolean isMonthPassed(LocalDateTime dateTime) {
-        return MyBank.getMyCentralBank().monthPassed(LastTransaction.getValue2(), dateTime);
+        return myBank.getMyCentralBank().monthPassed(lastTransaction.getValue2(), dateTime);
     }
 
     public void addingInterestToTheAmount() {
         var dataTime = LocalDateTime.now();
-        if (isMonthPassed(dataTime)) { Amount += Sum; }
+        if (isMonthPassed(dataTime)) { amount += sum; }
     }
 
     public double cashWithdrawal(double sum, LocalDateTime dateTime) {
-        if (!(Amount > sum)) { return 0; } // столько мы можем снять (ложный код возврата)
-        Amount -= sum;
-        Queue.bankingOperation(this);
-        LastTransaction = new Triplet<String, Double, LocalDateTime>("+", sum, dateTime);
+        if (!(amount > sum)) { return 0; } // столько мы можем снять (ложный код возврата)
+        amount -= sum;
+        queue.bankingOperation(this);
+        lastTransaction = new Triplet<String, Double, LocalDateTime>("+", sum, dateTime);
         return sum;
     }
 
     public double topUpYourAccount(double sum, LocalDateTime dateTime) {
-        Amount += sum;
-        Queue.bankingOperation(this);
-        LastTransaction = new Triplet<String, Double, LocalDateTime>("-", sum, dateTime);
-        return Amount;
+        amount += sum;
+        queue.bankingOperation(this);
+        lastTransaction = new Triplet<String, Double, LocalDateTime>("-", sum, dateTime);
+        return amount;
     }
 
     public void transferOfMoney(double sum, Client person, LocalDateTime dateTime) {
-        if (!(sum < Amount) || person == null) return;
-        Amount -= sum;
+        if (!(sum < amount) || person == null) {return;}
+        amount -= sum;
         person.setMoney(sum, dateTime);
-        Queue.bankingOperation(this);
-        LastTransaction = new Triplet<String, Double, LocalDateTime>("-", sum, dateTime);
+        queue.bankingOperation(this);
+        lastTransaction = new Triplet<String, Double, LocalDateTime>("-", sum, dateTime);
     }
 
     public void deleteLastTransaction() { // у мошенников деньги мы уже не заберем
-        if (LastTransaction.getValue0() == "+") {
-            cashWithdrawal(LastTransaction.getValue1(), LastTransaction.getValue2());
+        if (lastTransaction.getValue0() == "+") {
+            cashWithdrawal(lastTransaction.getValue1(), lastTransaction.getValue2());
         } else {
-            topUpYourAccount(LastTransaction.getValue1(), LastTransaction.getValue2());
+            topUpYourAccount(lastTransaction.getValue1(), lastTransaction.getValue2());
         }
-        LastTransaction = null;
+        lastTransaction = null;
     }
 }
