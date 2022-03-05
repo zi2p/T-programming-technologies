@@ -1,6 +1,5 @@
 package com.company.lab1.banks.entities;
 
-import com.company.lab1.banks.dataTime.DataTime;
 import com.company.lab1.banks.entities.banksAccounts.BankAccount;
 import com.company.lab1.banks.entities.client.Client;
 import com.company.lab1.banks.entities.methods.TransferLimit;
@@ -8,6 +7,7 @@ import com.company.lab1.banks.entities.methods.percentage.MethodPercentageChange
 import com.company.lab1.banks.services.CentralBank;
 import org.javatuples.Pair;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Bank implements Banks {
@@ -59,11 +59,11 @@ public class Bank implements Banks {
         Clients.add(t);
     }
 
-    public double getMoney(Client person, double sum, DataTime dateTime) {
+    public double getMoney(Client person, double sum, LocalDateTime dateTime) {
         for (Pair<Client, BankAccount> client : Clients) {
             if (client.getValue0().getID() == person.getID()) {
                 if (client.getValue0().getAdress() && client.getValue0().getPassport()) return client.getValue1().cashWithdrawal(sum, dateTime);
-                return client.getValue1().cashWithdrawal(sum < DoubtfulLimit.getMaxSum() ? sum : DoubtfulLimit.getMaxSum(), dateTime);
+                return client.getValue1().cashWithdrawal(Math.min(sum, DoubtfulLimit.getMaxSum()), dateTime);
             }
         }
         return 0;

@@ -1,6 +1,5 @@
 package com.company.lab1.banks.services;
 
-import com.company.lab1.banks.dataTime.DataTime;
 import com.company.lab1.banks.entities.Bank;
 import com.company.lab1.banks.entities.banksAccounts.BankAccount;
 import com.company.lab1.banks.entities.client.Client;
@@ -9,6 +8,7 @@ import com.company.lab1.banks.entities.methods.percentage.MethodPercentageChange
 import com.company.lab1.banks.entities.methods.percentage.PercentageChange;
 import com.company.lab1.banks.services.factory.FactoryConsole;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -73,7 +73,7 @@ public class ConsoleService implements ConsoleServices {
     }
 
     public void cashWithdrawal(BankAccount account, double sum) {
-        DataTime dataTime = new DataTime();
+        var dataTime = LocalDateTime.now();
         double s = account.cashWithdrawal(sum, dataTime);
         if (s == 0) { out.print("Деньги снять не удалось. "); }
         else {
@@ -83,7 +83,7 @@ public class ConsoleService implements ConsoleServices {
     }
 
     public void topUpYourAccount(BankAccount account, double sum) {
-        DataTime dataTime = new DataTime();
+        var dataTime = LocalDateTime.now();
         double s = account.topUpYourAccount(sum, dataTime);
         out.print("На Вашем счёте ");
         out.print(s);

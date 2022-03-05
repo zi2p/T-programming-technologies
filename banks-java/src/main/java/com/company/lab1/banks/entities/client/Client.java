@@ -1,8 +1,9 @@
 package com.company.lab1.banks.entities.client;
 
-import com.company.lab1.banks.dataTime.DataTime;
+
 import com.company.lab1.banks.entities.banksAccounts.BankAccount;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Client {
@@ -59,5 +60,5 @@ public class Client {
     public boolean getPassport() { return Passport != fakePassport; }
     public BankAccount getAccount() { return BankAccount; }
 
-    public void setMoney(double sum, DataTime dateTime) { BankAccount.topUpYourAccount(sum, dateTime); }
+    public void setMoney(double sum, LocalDateTime dateTime) { BankAccount.topUpYourAccount(sum, dateTime); }
 }

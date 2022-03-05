@@ -1,11 +1,11 @@
 package com.company.lab1.banks.services;
 
-import com.company.lab1.banks.dataTime.DataTime;
 import com.company.lab1.banks.entities.Bank;
 import com.company.lab1.banks.entities.Banks;
 import com.company.lab1.banks.entities.methods.TransferLimit;
 import com.company.lab1.banks.entities.methods.percentage.MethodPercentageChange;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CentralBank {
@@ -38,11 +38,15 @@ public class CentralBank {
         bank.setMethodTransferLimit(transferLimit);
     }
 
-    public boolean monthPassed(DataTime lastTime, DataTime nowTime) {
-        return (nowTime.NOWMONTH - lastTime.NOWMONTH == 1 && nowTime.NOWYEAR == lastTime.NOWYEAR) || (nowTime.NOWYEAR == lastTime.NOWYEAR + 1 && nowTime.NOWMONTH == 1 && lastTime.NOWMONTH == 12);
+    public boolean monthPassed(LocalDateTime lastTime, LocalDateTime nowTime) {
+        return (nowTime.getMonth().getValue() - lastTime.getMonth().getValue() == 1
+                && nowTime.getYear() == lastTime.getYear())
+                || (nowTime.getYear() == lastTime.getYear() + 1
+                && nowTime.getMonth().getValue() == 1 && lastTime.getMonth().getValue() == 12);
     }
-    public boolean dayPassed(DataTime lastTime, DataTime nowTime) {
-        return nowTime.NOWYEAR == lastTime.NOWYEAR && nowTime.NOWMONTH == lastTime.NOWMONTH &&
-                nowTime.NOWDAY == lastTime.NOWDAY + 1;
+    public boolean dayPassed(LocalDateTime lastTime, LocalDateTime nowTime) {
+        return nowTime.getYear() == lastTime.getYear()
+                && nowTime.getMonth() == lastTime.getMonth()
+                && nowTime.getDayOfMonth() == lastTime.getDayOfMonth() + 1;
     }
 }

@@ -1,12 +1,12 @@
 package com.company.lab1.banks.services.factory;
 
-import com.company.lab1.banks.dataTime.DataTime;
 import com.company.lab1.banks.entities.Bank;
 import com.company.lab1.banks.entities.banksAccounts.BankAccount;
 import com.company.lab1.banks.entities.banksAccounts.Credit;
 import com.company.lab1.banks.entities.banksAccounts.Debit;
 import com.company.lab1.banks.entities.banksAccounts.Deposit;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -35,7 +35,7 @@ public class FactoryConsole implements Factory {
                 switch (account) {
                     case 1 -> bankAccount = new Debit(sum, fakeProcent);
                     case 2 -> {
-                        DataTime dataTime = new DataTime();
+                        LocalDateTime dataTime = LocalDateTime.now();
                         bankAccount = new Deposit(sum, dataTime, Bank.getPercentageChange());
                     }
                 }

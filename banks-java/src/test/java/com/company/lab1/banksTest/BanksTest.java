@@ -1,6 +1,6 @@
 package com.company.lab1.banksTest;
 
-import com.company.lab1.banks.dataTime.DataTime;
+
 import com.company.lab1.banks.entities.Bank;
 import com.company.lab1.banks.entities.banksAccounts.BankAccount;
 import com.company.lab1.banks.entities.banksAccounts.Debit;
@@ -13,6 +13,8 @@ import com.company.lab1.banks.services.builder.ClientBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -60,6 +62,6 @@ public class BanksTest {
         CentralBank.addBank(bank);
         bank.setMyCentralBank(CentralBank);
         assertEquals(sum1, bankAccount1.getTheAmountOnTheAccount());
-        bankAccount1.transferOfMoney((sum1 / 4), Lida, new DataTime());
+        bankAccount1.transferOfMoney((sum1 / 4), Lida, LocalDateTime.now());
     }
 }
