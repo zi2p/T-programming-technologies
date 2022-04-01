@@ -1,0 +1,4 @@
+include(':data-access')
+project(':data-access').projectDir = new File('../data-access')
+include(':core')
+project(':core').projectDir = new File('../core')
