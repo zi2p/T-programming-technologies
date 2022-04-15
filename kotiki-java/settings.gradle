@@ -1,8 +1,10 @@
 rootProject.name = 'kotiki-java'
 include 'core'
-include 'data-access'
+include 'dataAccess'
 include 'infrastructure'
+include 'presentation'
 
 project(':core').projectDir = new File("core")
-project(':data-access').projectDir = new File("data-access")
+project(':dataAccess').projectDir = new File("dataAccess")
 project(':infrastructure').projectDir = new File("infrastructure")
+project(':presentation').projectDir = new File("presentation")

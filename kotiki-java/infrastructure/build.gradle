@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'com.kotiki.infrastructure'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -12,7 +12,8 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation project(':data-access')
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.6.3'
+    implementation project(':dataAccess')
     implementation project(':core')
 }
 
