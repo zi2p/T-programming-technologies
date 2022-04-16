@@ -9,11 +9,14 @@ import java.util.List;
 
 @Service
 public class InfrastructureCatService {
-    @Autowired
-    private CatService catService;
+    private final CatService catService;
+    private final CatDao catDao;
 
     @Autowired
-    private CatDao catDao;
+    public InfrastructureCatService(CatService catService, CatDao catDao) {
+        this.catService = catService;
+        this.catDao = catDao;
+    }
 
     public List<Cat> getAll() { return catDao.findAll(); }
 

@@ -10,14 +10,16 @@ import java.util.List;
 
 @Service
 public class InfrastructureOwnerService {
-    @Autowired
-    private OwnerService ownerService;
+    private final OwnerService ownerService;
+    private final CatDao catDao;
+    private final OwnerDao ownerDao;
 
     @Autowired
-    private CatDao catDao;
-
-    @Autowired
-    private OwnerDao ownerDao;
+    public InfrastructureOwnerService(OwnerService ownerService, CatDao catDao, OwnerDao ownerDao) {
+        this.ownerService = ownerService;
+        this.catDao = catDao;
+        this.ownerDao = ownerDao;
+    }
 
     public List<Owner> getAll() { return ownerDao.findAll(); }
 
