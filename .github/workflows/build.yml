@@ -22,12 +22,14 @@ jobs:
       - name: Build with Gradle
         uses: eskatos/gradle-command-action@v1
         with:
+            working-directory: kotiki-java
             gradle-version: current
             arguments: build
 
       - name: Test with Gradle
         uses: eskatos/gradle-command-action@v1
         with:
+            working-directory: kotiki-java
             gradle-version: current
             arguments: test
 
