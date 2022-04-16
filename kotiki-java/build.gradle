@@ -26,6 +26,10 @@ dependencies {
     implementation project('presentation')
 }
 
+bootJar {
+    enabled = false
+}
+
 test {
     useJUnitPlatform()
 }
