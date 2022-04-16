@@ -1,0 +1,35 @@
+name: Java
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up JDK 1.11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Build
+        run: gradle build
+
+      - name: Test
+        run: gradle test
+
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Gradle Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
