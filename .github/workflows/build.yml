@@ -19,12 +19,17 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Build
-        working-directory: kotiki-java
-        run: gradle build
+      - name: Build with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+            gradle-version: current
+            arguments: build
 
-      - name: Test
-        run: gradle test
+      - name: Test with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+            gradle-version: current
+            arguments: test
 
       - name: Report
         uses: dorny/test-reporter@v1
