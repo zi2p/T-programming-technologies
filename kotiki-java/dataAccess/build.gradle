@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.kotiki.core'
+group 'com.kotiki.dataAccess'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -12,7 +12,9 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.6.6'
+    implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.0.0.CR2'
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.6.3'
+    implementation project(':core')
 }
 
 test {

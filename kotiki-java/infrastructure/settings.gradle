@@ -1,4 +1,4 @@
-include(':data-access')
-project(':data-access').projectDir = new File('../data-access')
+include(':dataAccess')
+project(':dataAccess').projectDir = new File('../dataAccess')
 include(':core')
 project(':core').projectDir = new File('../core')

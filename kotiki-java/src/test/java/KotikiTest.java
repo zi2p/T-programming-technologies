@@ -1,17 +1,16 @@
-import daos.CatDao;
-import daos.OwnerDao;
-import entities.Cat;
-import entities.Owner;
-import models.Color;
-import org.hibernate.SessionFactory;
+import com.kotiki.dataAccess.daos.CatDao;
+import  com.kotiki.dataAccess.daos.OwnerDao;
+import com.kotiki.core.entities.Cat;
+import com.kotiki.core.entities.Owner;
+import com.kotiki.core.models.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import services.CatService;
-import services.InfrastructureOwnerService;
-import services.InfrastrutureCatService;
+import com.kotiki.core.services.CatService;
+import com.kotiki.infrastructure.services.InfrastructureOwnerService;
+import com.kotiki.infrastructure.services.InfrastructureCatService;
 import org.mockito.*;
-import services.OwnerService;
+import com.kotiki.core.services.OwnerService;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Matchers.any;
@@ -20,20 +19,20 @@ import static org.mockito.Mockito.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class KotikiTest {
     private InfrastructureOwnerService infrastructureOwnerService;
-    private InfrastrutureCatService infrastrutureCatService;
+    private InfrastructureCatService infrastructureCatService;
     private CatDao catDao;
     private OwnerDao ownerDao;
 
     @BeforeEach
     public void setup() {
         catDao = Mockito.mock(CatDao.class);
-        when(catDao.update(any(Cat.class))).thenAnswer(i -> i.getArguments()[0]);
+        when(catDao.save(any(Cat.class))).thenAnswer(i -> i.getArguments()[0]);
 
         ownerDao = Mockito.mock(OwnerDao.class);
-        when(ownerDao.update(any(Owner.class))).thenAnswer(i -> i.getArguments()[0]);
+        when(ownerDao.save(any(Owner.class))).thenAnswer(i -> i.getArguments()[0]);
 
         infrastructureOwnerService = new InfrastructureOwnerService(new OwnerService(), catDao, ownerDao);
-        infrastrutureCatService = new InfrastrutureCatService(new CatService(), catDao);
+        infrastructureCatService = new InfrastructureCatService(new CatService(), catDao);
     }
 
     @Test
@@ -45,8 +44,8 @@ public class KotikiTest {
 
         infrastructureOwnerService.addCat(owner, cat);
 
-        verify(ownerDao, times(1)).update(owner);
-        verify(catDao, times(1)).update(cat);
+        verify(ownerDao, times(1)).save(owner);
+        verify(catDao, times(1)).save(cat);
 
         assertTrue(owner.getCats().contains(cat));
     }
@@ -58,10 +57,10 @@ public class KotikiTest {
         Cat cat1 = new Cat("Виктор", date1, "Дворняга", Color.BLACK);
         Cat cat2 = new Cat("Федя", date2, "Дворняга", Color.ORANGE);
 
-        infrastrutureCatService.friendCats(cat1, cat2);
+        infrastructureCatService.friendCats(cat1, cat2);
 
-        verify(catDao, times(1)).update(cat1);
-        verify(catDao, times(1)).update(cat2);
+        verify(catDao, times(1)).save(cat1);
+        verify(catDao, times(1)).save(cat2);
 
         assertTrue(cat1.getFriends().contains(cat2));
     }
