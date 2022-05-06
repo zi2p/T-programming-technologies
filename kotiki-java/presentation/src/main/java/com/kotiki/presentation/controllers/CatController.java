@@ -1,10 +1,12 @@
 package com.kotiki.presentation.controllers;
+import com.kotiki.core.entities.Cat;
 import com.kotiki.presentation.dtos.CatDto;
 import com.kotiki.core.models.Color;
 import com.kotiki.presentation.dtos.OwnerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.kotiki.infrastructure.services.InfrastructureCatService;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
