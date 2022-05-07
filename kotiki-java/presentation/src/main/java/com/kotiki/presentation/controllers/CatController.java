@@ -1,10 +1,13 @@
 package com.kotiki.presentation.controllers;
+import com.kotiki.core.entities.Cat;
 import com.kotiki.presentation.dtos.CatDto;
 import com.kotiki.core.models.Color;
 import com.kotiki.presentation.dtos.OwnerDto;
+import com.kotiki.presentation.models.CreateCatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.kotiki.infrastructure.services.InfrastructureCatService;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,5 +38,11 @@ public class CatController {
     public OwnerDto getOwner(@PathVariable Long id) {
         var cat = catService.getById(id);
         return new OwnerDto(cat.getOwner());
+    }
+
+    @PostMapping("create")
+    public void createCat(@RequestBody CreateCatModel model) {
+        var cat = new Cat(model.getCatName(), LocalDateTime.now(), model.getBreed(), model.getColor());
+        catService.addToDatabase(cat);
     }
 }

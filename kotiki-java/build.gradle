@@ -23,7 +23,6 @@ dependencies {
     implementation project('core')
     implementation project('dataAccess')
     implementation project('infrastructure')
-    implementation project('presentation')
 }
 
 bootJar {
