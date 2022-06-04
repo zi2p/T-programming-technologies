@@ -1,10 +1,10 @@
 package com.kotiki.infrastructure.services;
-import com.kotiki.dataAccess.daos.CatDao;
 import com.kotiki.core.entities.Cat;
 import com.kotiki.core.models.Color;
+import com.kotiki.core.services.CatService;
+import com.kotiki.dataAccess.daos.CatDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.kotiki.core.services.CatService;
 import java.util.List;
 
 @Service

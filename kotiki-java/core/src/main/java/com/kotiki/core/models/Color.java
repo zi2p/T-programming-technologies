@@ -1,6 +1,7 @@
 package com.kotiki.core.models;
+import java.io.Serializable;
 
-public enum Color {
+public enum Color implements Serializable {
     WHITE,
     BLACK,
     ORANGE,

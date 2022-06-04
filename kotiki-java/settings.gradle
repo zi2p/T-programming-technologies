@@ -1,10 +1,21 @@
-rootProject.name = 'kotiki-java'
+rootProject.name = 'com.kotiki'
+
 include 'core'
 include 'dataAccess'
 include 'infrastructure'
-include 'presentation'
+include 'dtos'
+include 'microservices:cats'
+include 'microservices:owners'
+include 'microservices:external:infrastructure'
+include 'microservices:external:presentation'
+include 'microservices:shared'
 
 project(':core').projectDir = new File("core")
 project(':dataAccess').projectDir = new File("dataAccess")
 project(':infrastructure').projectDir = new File("infrastructure")
-project(':presentation').projectDir = new File("presentation")
+project(':dtos').projectDir = new File("dtos")
+project(':microservices:cats').projectDir = new File("microservices/cats")
+project(':microservices:owners').projectDir = new File("microservices/owners")
+project(':microservices:external:infrastructure').projectDir = new File("microservices/external/infrastructure")
+project(':microservices:external:presentation').projectDir = new File("microservices/external/presentation")
+project(':microservices:shared').projectDir = new File("microservices/shared")

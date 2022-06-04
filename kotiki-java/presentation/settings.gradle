@@ -1,9 +1,0 @@
-rootProject.name = 'kotiki.presentation'
-
-include 'core'
-include 'dataAccess'
-include 'infrastructure'
-
-project(':core').projectDir = new File("../core")
-project(':dataAccess').projectDir = new File("../dataAccess")
-project(':infrastructure').projectDir = new File("../infrastructure")
