@@ -1,4 +1,0 @@
-include(':dataAccess')
-project(':dataAccess').projectDir = new File('../dataAccess')
-include(':core')
-project(':core').projectDir = new File('../core')

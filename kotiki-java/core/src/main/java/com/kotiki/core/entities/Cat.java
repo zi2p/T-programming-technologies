@@ -27,7 +27,7 @@ public class Cat implements Serializable {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "cat_friends",
             joinColumns = { @JoinColumn(name = "left_id") },
